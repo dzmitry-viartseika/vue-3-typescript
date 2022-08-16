@@ -1,18 +1,9 @@
-import { createStore } from 'vuex'
+import Vuex from 'vuex';
 
-export default createStore({
-  state: {
-    todos: [],
-  },
-  getters: {
-    todos(state) {
-      return state.todos;
-    }
-  },
-  mutations: {
-  },
-  actions: {
-  },
+import Posts from './Posts/Posts';
+
+export default new Vuex.Store({
   modules: {
-  }
-})
+    Posts,
+  },
+});
