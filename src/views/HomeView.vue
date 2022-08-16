@@ -1,17 +1,31 @@
 <template>
   <div class="home">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    {{ postsList.length }}
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import { defineComponent, onMounted } from 'vue';
+import PostsService from '../services/Posts/PostsService';
 
 export default defineComponent({
   name: 'HomeView',
-  components: {
-    HelloWorld,
-  },
+  setup() {
+    const postsList: any[] = [];
+    console.log('setup');
+
+    onMounted(async () => {
+      try {
+        const response =  await PostsService.getPosts();
+        this.postsList = response.data;
+      } catch (e) {
+        console.error(e)
+      }
+    })
+
+    return {
+      postsList,
+    }
+  }
 });
 </script>
