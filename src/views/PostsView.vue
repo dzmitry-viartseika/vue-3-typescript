@@ -15,6 +15,7 @@
             </div>
             <div class="space-x-2">
               <button class="px-2 text-red-600"
+                      @click="deletePost(post.id)"
                       title="Remove todo">Delete</button>
               <button
                       class="px-2 text-orange-600"
@@ -43,10 +44,10 @@
 
 <script lang="ts">
 import {defineComponent, onMounted, ref} from 'vue';
-import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import PostsService from '../services/Posts/PostsService';
 import IPostResponse from '../models/Responses/IPostResponse';
+import Posts from "@/store/Posts/Posts";
 
 export default defineComponent({
   name: 'PostsView',
@@ -54,7 +55,7 @@ export default defineComponent({
     const postsList = ref([] as IPostResponse[]);
     const store = useStore();
 
-    onMounted( async () => {
+    onMounted( async ()=> {
       if (store.getters.posts.length) {
         postsList.value = store.getters.posts;
       } else {
@@ -68,8 +69,19 @@ export default defineComponent({
       }
     })
 
+    const deletePost = async (id: number) => {
+      if (confirm('Are you sure?')) {
+        console.log(id);
+        await PostsService.deletePost(id);
+        const filteredPosts = postsList.value.filter((item) => item.id !== id);
+        postsList.value = filteredPosts;
+      }
+
+    }
+
     return {
       postsList,
+      deletePost,
     }
   }
 });

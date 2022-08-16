@@ -7,6 +7,10 @@ export default class PostsService {
     static getPosts(): Promise<AxiosResponse<any[]>> {
         return $api.get<any[]>('/posts');
     }
+
+    static deletePost(id: number): Promise<AxiosResponse<any[]>> {
+        return $api.delete<any[]>(`/posts/${id}`);
+    }
     //
     // static updateUser(updatedUser: IUser): Promise<AxiosResponse<IUser>> {
     //     return $api.patch<IUser>('/update-user', { updatedUser });
