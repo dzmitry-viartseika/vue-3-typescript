@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    Количество постов{{ postsList.length }}
+    Posts = {{ postsList.length }}
     <button @click="proceedTo">
       Proceed to todos page
     </button>
