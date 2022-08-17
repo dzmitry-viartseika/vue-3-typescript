@@ -1,30 +1,21 @@
 import { AxiosResponse } from 'axios';
 import $api from '../../api/api';
-// import { IUser } from '../../model/IUser';
-// import { IUsersListResponse } from '@/model/response/IUsersListResponse';
+import IPostResponse from '@/models/Responses/IPostResponse';
 
 export default class PostsService {
     static getPosts(): Promise<AxiosResponse<any[]>> {
-        return $api.get<any[]>('/posts');
+        return $api.get<IPostResponse[]>('/posts');
     }
 
     static deletePost(id: number): Promise<AxiosResponse<any[]>> {
         return $api.delete<any[]>(`/posts/${id}`);
     }
-    //
-    // static updateUser(updatedUser: IUser): Promise<AxiosResponse<IUser>> {
-    //     return $api.patch<IUser>('/update-user', { updatedUser });
-    // }
-    //
-    // static getCurrentUser(): Promise<AxiosResponse<IUser>> {
-    //     return $api.get<IUser>('/me');
-    // }
-    //
-    // static async success(): Promise<AxiosResponse<any>> {
-    //     return $api.get('/');
-    // }
-    //
-    // static getUsers(): Promise<AxiosResponse<IUsersListResponse[]>> {
-    //     return $api.get('/get-users');
-    // }
+
+    static addPost(post: IPostResponse): Promise<any> {
+        return $api.post<any>('/posts', post);
+    }
+
+    static editPost(id: number): Promise<AxiosResponse<any[]>> {
+        return $api.put<any[]>(`/posts/${id}`);
+    }
 }
