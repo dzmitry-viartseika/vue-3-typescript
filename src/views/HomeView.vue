@@ -4,11 +4,13 @@
     <button @click="proceedTo">
       Proceed to todos page
     </button>
+    <button @click="increaseCount">count is: {{ count }}</button>
+    {{ test }}
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref} from 'vue';
+import {defineComponent, onMounted, reactive, toRefs, ref} from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import PostsService from '../services/Posts/PostsService';
@@ -24,6 +26,15 @@ export default defineComponent({
       router.push('/todos');
     }
 
+    const state = reactive({
+      count: 0,
+      test: 'wertey'
+    });
+
+    const increaseCount = () => {
+      state.count++;
+    }
+
     onMounted(async () => {
       try {
         const { data } = await PostsService.getPosts();
@@ -37,6 +48,8 @@ export default defineComponent({
     return {
       postsList,
       proceedTo,
+      increaseCount,
+      ...toRefs(state),
     }
   }
 });
