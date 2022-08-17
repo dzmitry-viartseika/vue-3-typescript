@@ -6,6 +6,7 @@
     </button>
     <button @click="increaseCount">count is: {{ count }}</button>
     {{ test }}
+    <TestComponent :test="'wertey'" @close="close"/>
   </div>
 </template>
 
@@ -15,8 +16,12 @@ import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import PostsService from '../services/Posts/PostsService';
 import IPostResponse from '../models/Responses/IPostResponse';
+import TestComponent from '../components/TestComponent.vue';
 
 export default defineComponent({
+  components: {
+    TestComponent,
+  },
   name: 'HomeView',
   setup() {
     const postsList = ref([] as IPostResponse[]);
@@ -35,6 +40,10 @@ export default defineComponent({
       state.count++;
     }
 
+    const close = (data: any) => {
+      console.log('tts', data);
+    }
+
     onMounted(async () => {
       try {
         const { data } = await PostsService.getPosts();
@@ -49,6 +58,7 @@ export default defineComponent({
       postsList,
       proceedTo,
       increaseCount,
+      close,
       ...toRefs(state),
     }
   }
